@@ -7,11 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 /**
@@ -32,13 +38,15 @@ public class CodeExtract {
         if (file.delete()) {
             file.createNewFile();
         }
-        BufferedRandomAccessFile writer = new BufferedRandomAccessFile(file, "rw");
-        findJavaFile(systemEnvironmentConfig.getFilepath() ,writer);
+        BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
+//        BufferedRandomAccessFile writer = new BufferedRandomAccessFile(file, "rw");
+        findJavaFile(systemEnvironmentConfig.getFilepath() , writer);
         writer.close();
         System.exit(1);
     }
 
-    public void findJavaFile(String path, BufferedRandomAccessFile newFile) throws IOException {
+    public void findJavaFile(String path, BufferedWriter newFile) throws IOException {
         File file = new File(path);
         if (file.exists()) {
             File[] files = file.listFiles();
@@ -46,6 +54,9 @@ public class CodeExtract {
                 for (File file2 : files) {
                     if (file2.isDirectory()) {
                         System.out.println("directory file:" + file2.getAbsolutePath());
+                        if (file2.getName().equals("test")){
+                            continue;
+                        }
                         findJavaFile(file2.getAbsolutePath(), newFile);
                     } else {
                         if (file2.getName().endsWith(".java")) {
@@ -60,23 +71,25 @@ public class CodeExtract {
         }
     }
 
-    private void handle(File file2, BufferedRandomAccessFile newFile) throws IOException {
+    private void handle(File file2, BufferedWriter newFile) throws IOException {
+        int i = 1;
         StringBuilder builder = new StringBuilder();
-        try (Stream<String> stream = Files.lines(Paths.get(file2.toURI()), StandardCharsets.UTF_8)) {
-            stream.forEach(str -> {
-                if (str == null || str.equals("")) {
-                    return;
-                }
-                builder.append(str).append("\n");
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
+        BufferedRandomAccessFile reader = new BufferedRandomAccessFile(file2, "r");
+        String str;
+        while((str = reader.readLine()) != null){
+            if (str.equals("") || str.equals("\n") || str.equals("\r\n")
+                    || str.matches("^\\s*/\\*{1,2}[\\s\\S]*?")
+                    || str.matches("^\\s*//[\\s\\S]*?")
+                    || str.matches("^\\s*\\n\n")
+                    || str.matches("^\\s*\\*[\\s\\S]*?")) {
+                continue;
+            }
+            builder.append(++i).append("\t").append(str).append("\n");
         }
-        String string = builder.toString();
-        string = string.replaceAll("/\\*{1,2}[\\s\\S]*?\\*/\n","");
-        string = string.replaceAll("//[\\s\\S]*?\\n","");
-        string = string.replaceAll("^\\s*\\n\n","");
-        newFile.seek(file2.length());
-        newFile.writeBytes(string);
+        String firstLine = "1" + "\t" +
+                file2.getAbsolutePath().split("main/java")[1] + "\t" +  i + "行" + "\n";
+        String string = firstLine +  builder.toString();
+        newFile.write(string);
+        newFile.flush();// 清空缓冲区
     }
 }
