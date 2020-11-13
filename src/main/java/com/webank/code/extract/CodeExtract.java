@@ -12,13 +12,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
+import java.util.List;
 
 /**
  * @author wesleywang
@@ -41,20 +37,27 @@ public class CodeExtract {
         BufferedWriter writer = new BufferedWriter(
                 new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
 //        BufferedRandomAccessFile writer = new BufferedRandomAccessFile(file, "rw");
-        findJavaFile(systemEnvironmentConfig.getFilepath() , writer);
+        findJavaFile(systemEnvironmentConfig.getFilepath(), writer);
         writer.close();
         System.exit(1);
     }
+
 
     public void findJavaFile(String path, BufferedWriter newFile) throws IOException {
         File file = new File(path);
         if (file.exists()) {
             File[] files = file.listFiles();
-            if (null != files) {
-                for (File file2 : files) {
+            if (files == null) {
+                return;
+            }
+            List<File> fileList = Arrays.asList(files);
+            fileList.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
+            if (!fileList.isEmpty()) {
+                for (File file2 : fileList) {
                     if (file2.isDirectory()) {
                         System.out.println("directory file:" + file2.getAbsolutePath());
-                        if (file2.getName().equals("test")){
+                        if (file2.getName().equals("test") || file2.getName().equals(".git")
+                                || file2.getName().equals(".gradle")) {
                             continue;
                         }
                         findJavaFile(file2.getAbsolutePath(), newFile);
@@ -76,7 +79,7 @@ public class CodeExtract {
         StringBuilder builder = new StringBuilder();
         BufferedRandomAccessFile reader = new BufferedRandomAccessFile(file2, "r");
         String str;
-        while((str = reader.readLine()) != null){
+        while ((str = reader.readLine()) != null) {
             if (str.equals("") || str.equals("\n") || str.equals("\r\n")
                     || str.matches("^\\s*/\\*{1,2}[\\s\\S]*?")
                     || str.matches("^\\s*//[\\s\\S]*?")
@@ -87,8 +90,8 @@ public class CodeExtract {
             builder.append(++i).append("\t").append(str).append("\n");
         }
         String firstLine = "1" + "\t" +
-                file2.getAbsolutePath().split("main/java")[1] + "\t" +  i + "行" + "\n";
-        String string = firstLine +  builder.toString();
+                file2.getAbsolutePath().split("main/java")[1] + "\t" + i + "行" + "\n";
+        String string = firstLine + builder.toString();
         newFile.write(string);
         newFile.flush();// 清空缓冲区
     }
