@@ -37,4 +37,8 @@ public class SystemEnvironmentConfig {
     @Value("${extract.filepath}")
     private String filepath;
 
+
+    @Value("${filetype}")
+    private String filetype;
+
 }

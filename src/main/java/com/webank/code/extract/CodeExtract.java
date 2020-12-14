@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -37,13 +38,13 @@ public class CodeExtract {
         BufferedWriter writer = new BufferedWriter(
                 new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
 //        BufferedRandomAccessFile writer = new BufferedRandomAccessFile(file, "rw");
-        findJavaFile(systemEnvironmentConfig.getFilepath(), writer);
+        findFile(systemEnvironmentConfig.getFilepath(), writer);
         writer.close();
         System.exit(1);
     }
 
 
-    public void findJavaFile(String path, BufferedWriter newFile) throws IOException {
+    public void findFile(String path, BufferedWriter newFile) throws IOException {
         File file = new File(path);
         if (file.exists()) {
             File[] files = file.listFiles();
@@ -51,7 +52,7 @@ public class CodeExtract {
                 return;
             }
             List<File> fileList = Arrays.asList(files);
-            fileList.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
+            fileList.sort(Comparator.comparing(File::getName));
             if (!fileList.isEmpty()) {
                 for (File file2 : fileList) {
                     if (file2.isDirectory()) {
@@ -60,9 +61,9 @@ public class CodeExtract {
                                 || file2.getName().equals(".gradle")) {
                             continue;
                         }
-                        findJavaFile(file2.getAbsolutePath(), newFile);
+                        findFile(file2.getAbsolutePath(), newFile);
                     } else {
-                        if (file2.getName().endsWith(".java")) {
+                        if (file2.getName().endsWith("."+ systemEnvironmentConfig.getFiletype())) {
                             System.out.println("code file:" + file2.getAbsolutePath());
                             handle(file2, newFile);
                         }
@@ -89,8 +90,14 @@ public class CodeExtract {
             }
             builder.append(++i).append("\t").append(str).append("\n");
         }
-        String firstLine = "1" + "\t" +
-                file2.getAbsolutePath().split("main/java")[1] + "\t" + i + "行" + "\n";
+        String firstLine = null;
+        if (systemEnvironmentConfig.getFiletype().equals("java")) {
+            firstLine = "1" + "\t" +
+                    file2.getAbsolutePath().split("main/java")[1] + "\t" + i + "行" + "\n";
+        }
+        if (systemEnvironmentConfig.getFiletype().equals("sol")){
+            firstLine = "1" + "\t" + i + "行" + "\n";
+        }
         String string = firstLine + builder.toString();
         newFile.write(string);
         newFile.flush();// 清空缓冲区
