@@ -96,7 +96,7 @@ public class CodeExtract {
                     file2.getAbsolutePath().split("main/java")[1] + "\t" + i + "行" + "\n";
         }
         if (systemEnvironmentConfig.getFiletype().equals("sol")){
-            firstLine = "1" + "\t" + i + "行" + "\n";
+            firstLine = "1" + "\t" + file2.getName() +"\t"+ i + "行" + "\n";
         }
         String string = firstLine + builder.toString();
         newFile.write(string);
