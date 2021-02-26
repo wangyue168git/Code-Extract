@@ -28,6 +28,7 @@ public class CodeExtract {
 
     @Autowired
     private SystemEnvironmentConfig systemEnvironmentConfig;
+    int j  = 0;
 
     @PostConstruct
     public void extractCode() throws IOException {
@@ -39,6 +40,7 @@ public class CodeExtract {
                 new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
 //        BufferedRandomAccessFile writer = new BufferedRandomAccessFile(file, "rw");
         findFile(systemEnvironmentConfig.getFilepath(), writer);
+        log.info("项目总行数 ==" + j);
         writer.close();
         System.exit(1);
     }
@@ -88,15 +90,17 @@ public class CodeExtract {
                     || str.matches("^\\s*\\*[\\s\\S]*?")) {
                 continue;
             }
-            builder.append(++i).append("\t").append(str).append("\n");
+            i++;
+            j++;
+            builder.append(str).append("\n");
         }
         String firstLine = null;
-        if (systemEnvironmentConfig.getFiletype().equals("java")) {
-            firstLine = "1" + "\t" +
+        if (systemEnvironmentConfig.getFiletype().equals("java") && file2.getAbsolutePath().contains("main/java")) {
+            firstLine =
                     file2.getAbsolutePath().split("main/java")[1] + "\t" + i + "行" + "\n";
         }
         if (systemEnvironmentConfig.getFiletype().equals("sol")){
-            firstLine = "1" + "\t" + file2.getName() +"\t"+ i + "行" + "\n";
+            firstLine = file2.getName() +"\t"+ i + "行" + "\n";
         }
         String string = firstLine + builder.toString();
         newFile.write(string);
