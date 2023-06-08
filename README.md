@@ -11,5 +11,6 @@ git clone https://github.com/wangyue168git/Code-Extract.git
 - 使用代码抽取
 ```
 cd Code-Extract
-java -jar -Dextract.filepath=/path/to/extract/file -Dfiletype=java CodeExtract.jar
+./run.sh -f 项目路径 -t 抽取项目文件类型 (java/js等)
+./run.sh -h 可查看参数说明
 ```
