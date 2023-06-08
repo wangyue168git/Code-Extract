@@ -6,7 +6,7 @@ plugins {
 	id 'idea'
 }
 
-group = 'com.webank'
+group = 'com.wangyue'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
@@ -45,7 +45,7 @@ sourceSets {
 
 bootJar {
 	destinationDir file('dist')
-	archiveName project.name + "-" + version + '.jar'
+	archiveName project.name + '.jar'
 
 	exclude '**/*.properties'
 
