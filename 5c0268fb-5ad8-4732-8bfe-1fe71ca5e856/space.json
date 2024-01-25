@@ -1,0 +1,28 @@
+{
+  "id": "5c0268fb-5ad8-4732-8bfe-1fe71ca5e856",
+  "userId": "b3c1dcbb-05e7-4b28-809a-7b7d77e270cc",
+  "editorMode": "BLOCK",
+  "name": "卡拉马佐夫",
+  "sort": 1,
+  "isActive": true,
+  "encrypted": false,
+  "password": "",
+  "color": "yellow500",
+  "activeNodeIds": [
+    "cb607ca8-e95d-4617-a0db-3cc2a81ee52b"
+  ],
+  "nodeSnapshot": {
+    "version": 0,
+    "nodeMap": {}
+  },
+  "pageSnapshot": {
+    "version": 0,
+    "pageMap": {}
+  },
+  "createdAt": "2024-01-25T09:44:50.978Z",
+  "updatedAt": "2024-01-25T09:44:50.978Z",
+  "syncServerId": "afe9de2f-728d-4bb8-9f36-d285e9916b7c",
+  "syncServerUrl": "https://sync-server-official-2.penx.io",
+  "syncServerAccessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiM2MxZGNiYi0wNWU3LTRiMjgtODA5YS03YjdkNzdlMjcwY2MiLCJpYXQiOjE3MDYxNzU4OTJ9.OaMWAlw3-2QQg4brh36OUO8GJhh_9k-1IVog_TawCwk",
+  "nodesLastUpdatedAt": "2024-01-25T09:57:03.372Z"
+}

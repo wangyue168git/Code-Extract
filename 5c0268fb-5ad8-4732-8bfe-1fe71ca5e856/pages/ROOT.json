@@ -1,0 +1,34 @@
+[
+  {
+    "id": "1f33d3a7-faca-4699-8d77-b0ca347f5883",
+    "type": "ROOT",
+    "element": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "text": "卡拉马佐夫"
+          }
+        ]
+      }
+    ],
+    "props": {
+      "catalogue": [
+        {
+          "id": "6fef6467-b307-402c-a3ec-329d22ed5bc8",
+          "folded": false,
+          "type": "NODE"
+        }
+      ]
+    },
+    "collapsed": false,
+    "folded": true,
+    "children": [
+      "6fef6467-b307-402c-a3ec-329d22ed5bc8"
+    ],
+    "openedAt": "2024-01-25T09:44:52.639Z",
+    "createdAt": "2024-01-25T09:44:52.639Z",
+    "updatedAt": "2024-01-25T09:45:20.325Z",
+    "spaceId": "5c0268fb-5ad8-4732-8bfe-1fe71ca5e856"
+  }
+]

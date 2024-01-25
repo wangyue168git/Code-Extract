@@ -1,0 +1,48 @@
+[
+  {
+    "id": "6fef6467-b307-402c-a3ec-329d22ed5bc8",
+    "type": "COMMON",
+    "element": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "props": {},
+    "collapsed": true,
+    "folded": true,
+    "children": [
+      "7c36ace6-5f9d-4ffa-8bd9-255471285994"
+    ],
+    "openedAt": "2024-01-25T09:45:20.313Z",
+    "createdAt": "2024-01-25T09:45:20.313Z",
+    "updatedAt": "2024-01-25T09:45:20.313Z",
+    "spaceId": "5c0268fb-5ad8-4732-8bfe-1fe71ca5e856"
+  },
+  {
+    "id": "7c36ace6-5f9d-4ffa-8bd9-255471285994",
+    "type": "COMMON",
+    "element": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "props": {},
+    "collapsed": false,
+    "folded": true,
+    "children": [],
+    "openedAt": "2024-01-25T09:45:20.312Z",
+    "createdAt": "2024-01-25T09:45:20.312Z",
+    "updatedAt": "2024-01-25T09:45:20.312Z",
+    "spaceId": "5c0268fb-5ad8-4732-8bfe-1fe71ca5e856"
+  }
+]

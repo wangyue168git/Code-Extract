@@ -1,0 +1,48 @@
+[
+  {
+    "id": "3f705535-1ab8-4ef5-be85-ff9c43c19aba",
+    "type": "INBOX",
+    "element": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "props": {},
+    "collapsed": false,
+    "folded": true,
+    "children": [
+      "41c48beb-9f0e-4aba-a071-d2d15c14993b"
+    ],
+    "openedAt": "2024-01-25T09:44:52.651Z",
+    "createdAt": "2024-01-25T09:44:52.651Z",
+    "updatedAt": "2024-01-25T09:44:52.651Z",
+    "spaceId": "5c0268fb-5ad8-4732-8bfe-1fe71ca5e856"
+  },
+  {
+    "id": "41c48beb-9f0e-4aba-a071-d2d15c14993b",
+    "type": "COMMON",
+    "element": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "props": {},
+    "collapsed": false,
+    "folded": true,
+    "children": [],
+    "openedAt": "2024-01-25T09:44:52.640Z",
+    "createdAt": "2024-01-25T09:44:52.640Z",
+    "updatedAt": "2024-01-25T09:44:52.640Z",
+    "spaceId": "5c0268fb-5ad8-4732-8bfe-1fe71ca5e856"
+  }
+]
